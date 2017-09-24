@@ -1,9 +1,10 @@
 <template>
-  <v-container>
+  <v-container id="imagen">
     <v-layout>
       <v-flex xs12 sm6 offset-sm3>
         <v-card-text>
           <v-container>
+            <h3>Sign In!</h3>
             <form>
               <v-layout row>
                 <v-flex xs12>
@@ -13,7 +14,8 @@
                   id="email"
                   v-model="email"
                   type="email"
-                  required>
+                  required
+                  >
                   </v-text-field>
                 </v-flex>
               </v-layout>
@@ -25,7 +27,8 @@
                   id="password"
                   v-model="password"
                   type="password"
-                  required>
+                  required
+                  >
                   </v-text-field>
                 </v-flex>
               </v-layout>
@@ -66,5 +69,12 @@ export default {
 
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
+  h3{
+    text-align: center;
+  }
+  /*#imagen{
+    background-image: url(../../assets/signIn.jpg);
+    background-size: 100% 100%;
+  }*/
 </style>

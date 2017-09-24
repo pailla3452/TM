@@ -24,7 +24,10 @@
         class="hidden-sm-and-up "></v-toolbar-side-icon>
       <!-- Toolbar :B -->
       <v-toolbar-title>
-        <router-link to='/' tag='span' style="cursor: pointer">Collège</router-link>
+        <router-link flat to='/' tag='span' style="cursor: pointer">
+           <v-icon left dark class="mr-1 mb-1">school</v-icon>
+           Collège
+         </router-link>
       </v-toolbar-title>
       <v-spacer></v-spacer >
       <v-toolbar-items class="hidden-xs-only">
@@ -52,9 +55,16 @@
       return {
         sideNav: false,
         menuItems: [
+          {icon: 'home', title: 'Home', link: '/profile'},
+          {icon: 'assignment', title: 'Devoirs', link: '/output/devoirs'},
+          {icon: 'report', title: 'Epreuves', link: '/profile'},
+          {icon: 'date_range', title: 'Horaire', link: '/profile'},
+          {icon: 'trending_up', title: 'Notes', link: '/profile'},
+          {icon: 'view_week', title: 'Subjects', link: '/output/subjects'},
+          {icon: 'build', title: 'Config', link: '/profile'},
           {icon: 'person', title: 'Profile', link: '/profile'},
-          {icon: 'face', title: 'Sign up', link: 'signup'},
-          {icon: 'lock_open', title: 'Sign in', link: 'signin'}
+          {icon: 'face', title: 'Sign up', link: '/signup'},
+          {icon: 'lock_open', title: 'Sign in', link: '/signin'}
         ]
       }
     }
