@@ -19,5 +19,8 @@ L'application n'est pas toujours fini. On peut:
 
 # Les données sont sauvegardées dans FIREBASE
 
-# P.D.: Il faut encore traduire l'application. Après avoir fini le code, je vais rendre le tout un WPA pour qu'on puisse télécharger l'application dans un portable, recevoir des notifications, pouvoir l'utiliser off-line, etc.
+# P.D.: Il faut encore traduire l'application.
+Après avoir fini le code, je vais rendre le tout un WPA pour qu'on puisse télécharger
+l'application dans un portable, recevoir des notifications, pouvoir l'utiliser
+off-line, etc.
 ```
