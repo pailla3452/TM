@@ -2,7 +2,7 @@
 
 > Travail de maturité
 
-## Build Setup
+## Quelques informations importantes
 
 ``` bash
 # Pour regarder le projet sous la forme d'application:
