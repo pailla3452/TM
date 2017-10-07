@@ -8,10 +8,10 @@
             <v-subheader inset>Cette semaine</v-subheader>
             <!-- TODO ONCLICK IR AL DEVOIR -->
             <v-list-tile avatar v-for="devoir in devoirs" :keys="devoir.id" :to="'/output/devoirs/' + devoir.id">
-              <!-- TODO PONER PROGRES!! -->
               <v-list-tile-avatar>
                 <v-progress-circular
                 :value="devoir.progres"
+                v-bind:rotate="-90"
                 v-bind:class="[devoir.color]">
                 </v-progress-circular>
               </v-list-tile-avatar>
@@ -22,6 +22,7 @@
               <v-list-tile-action>
                 <v-list-tile-action-text>
                   {{devoir.date}}
+                  {{devoir.subject}}
                 </v-list-tile-action-text>
               </v-list-tile-action>
             </v-list-tile>

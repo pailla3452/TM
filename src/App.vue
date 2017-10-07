@@ -13,6 +13,14 @@
           </v-list-tile-action>
           <v-list-tile-content>{{item.title}}</v-list-tile-content>
         </v-list-tile>
+        <v-list-tile
+        v-if="userIsAuthenticated"
+        @click="onSignOut">
+          <v-list-tile-action>
+            <v-icon>exit_to_app</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>Log out</v-list-tile-content>
+        </v-list-tile>
       </v-list>
     </v-navigation-drawer>
 
@@ -40,6 +48,11 @@
           <v-icon left>{{item.icon}}</v-icon>
           {{item.title}}
         </v-btn>
+        <v-btn flat
+        @click="onSignOut"
+        v-if="userIsAuthenticated">
+          <v-icon left>exit_to_app</v-icon>
+        </v-btn>
       </v-toolbar-items>
     </v-toolbar>
     <!-- El resto del app!! -->
@@ -53,19 +66,36 @@
   export default {
     data () {
       return {
-        sideNav: false,
-        menuItems: [
-          {icon: 'home', title: 'Home', link: '/profile'},
-          {icon: 'assignment', title: 'Devoirs', link: '/output/devoirs'},
-          {icon: 'report', title: 'Epreuves', link: '/profile'},
-          {icon: 'date_range', title: 'Horaire', link: '/profile'},
-          {icon: 'trending_up', title: 'Notes', link: '/profile'},
-          {icon: 'view_week', title: 'Subjects', link: '/output/subjects'},
-          {icon: 'build', title: 'Config', link: '/profile'},
-          {icon: 'person', title: 'Profile', link: '/profile'},
+        sideNav: false
+      }
+    },
+    computed: {
+      menuItems () {
+        var menuItems = [
           {icon: 'face', title: 'Sign up', link: '/signup'},
           {icon: 'lock_open', title: 'Sign in', link: '/signin'}
         ]
+        if (this.userIsAuthenticated) {
+          menuItems = [
+            // {icon: 'home', title: 'Home', link: '/'},
+            {icon: 'assignment', title: 'Devoirs', link: '/output/devoirs'},
+            {icon: 'report', title: 'Epreuves', link: '/output/epreuves'},
+            {icon: 'date_range', title: 'Horaire', link: '/output/horaire'},
+            {icon: 'trending_up', title: 'Notes', link: '/output/notes'},
+            {icon: 'view_week', title: 'Subjects', link: '/output/subjects'},
+            {icon: 'build', title: 'Config', link: '/profile'},
+            {icon: 'person', title: 'Profile', link: '/profile'}
+          ]
+        }
+        return menuItems
+      },
+      userIsAuthenticated () {
+        return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+      }
+    },
+    methods: {
+      onSignOut () {
+        this.$store.dispatch('logOut')
       }
     }
   }

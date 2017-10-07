@@ -1,11 +1,16 @@
 <template>
   <v-container id="imagen">
+    <v-layout row v-if="error">
+      <v-flex xs12 sm6 offset-sm3>
+        <app-alert @closeEmitted="onDismissed" :text="error.message"></app-alert>
+      </v-flex>
+    </v-layout>
     <v-layout>
       <v-flex xs12 sm6 offset-sm3>
         <v-card-text>
           <v-container>
             <h3>Sign In!</h3>
-            <form>
+            <form @submit.prevent="onSignIn">
               <v-layout row>
                 <v-flex xs12>
                   <v-text-field
@@ -34,7 +39,7 @@
               </v-layout>
               <v-layout row>
                 <v-flex xs12>
-                  <v-btn type="submit" @click="onSignin">Sign in</v-btn>
+                  <v-btn type="submit">Sign in</v-btn>
                 </v-flex>
               </v-layout>
             </form>
@@ -50,19 +55,31 @@ export default {
   data () {
     return {
       email: '',
-      password: '',
-      confirmPassword: ''
+      password: ''
     }
   },
   computed: {
-    comparePasswords () {
-      return this.password !== this.confirmPassword ? 'Passwords do not match' : true
+    error () {
+      return this.$store.getters.error
+    },
+    user () {
+      return this.$store.getters.user
     }
   },
   methods: {
-    onSignin () {
+    onSignIn () {
       // Vuex TODO + Check firebase TODO
-      console.log(this.email, this.password)
+      this.$store.dispatch('signUserIn', {email: this.email, password: this.password})
+    },
+    onDismissed () {
+      this.$store.dispatch('clearError')
+    }
+  },
+  watch: {
+    user (value) {
+      if (value !== null && value !== undefined) {
+        this.$router.push('/')
+      }
     }
   }
 }

@@ -4,7 +4,7 @@
       <v-icon left >note_add</v-icon>Ajouter un devoir</v-btn>
     <v-card>
       <!-- Toolbar + TITRE -->
-      <v-toolbar dark class="blue-grey lighten-2">
+      <v-toolbar dark :class="colorFromSubject">
         <v-btn icon @click.native="dialog = false">
           <v-icon>close</v-icon>
         </v-btn>
@@ -13,7 +13,7 @@
         <v-icon dark large class="mr-5">alarm_on</v-icon>
       </v-toolbar>
       <!-- CONTENT -->
-      <form>
+      <form @submit.prevent="onCreateDevoir" class="mt-2">
         <v-layout row>
           <v-flex xs10 sm6 offset-sm3 offset-xs1>
               <v-text-field
@@ -56,12 +56,22 @@
               </v-date-picker>
             </v-menu>
           </v-flex>
+          <!-- SUBJECTS -->
+          <v-flex xs10 sm6 offset-sm3 offset-xs1>
+            <v-select
+              :items="subjects"
+              v-model="subject"
+              label="Branche"
+              single-line
+              bottom
+            ></v-select>
+          </v-flex>
           <!-- TYPE -->
           <v-flex xs10 sm6 offset-sm3 offset-xs1>
             <v-select
               :items="types"
               v-model="type"
-              label="Select"
+              label="Type"
               single-line
               bottom
             ></v-select>
@@ -95,6 +105,12 @@
 
 <script>
 export default {
+  created () {
+    const subjects = this.$store.state.subjects
+    for (var i = 0, n = subjects.length; i < n; i++) {
+      this.subjects.push({text: subjects[i].subject, colorOfSubject: subjects[i].colorFluid, colorForSubmit: subjects[i].color})
+    }
+  },
   data () {
     return {
       // CONFIG
@@ -102,21 +118,45 @@ export default {
       modal: false,
       dialog: false,
       // PR DEVOIR
+      subject: '',
       title: '',
+      description: '',
       date: new Date(),
       type: '',
-      description: '',
       // Types
       types: [
         {text: 'Devoir'},
         {text: 'Epreuve'},
         {text: 'Reminder'}
-      ]
+      ],
+      subjects: []
     }
   },
   computed: {
     formIsValid () {
       return this.title !== '' && this.description !== '' && this.type !== ''
+    },
+    colorFromSubject () {
+      if (!this.subject) {
+        return 'cyan darken-2'
+      }
+      return this.subject.colorOfSubject
+    }
+  },
+  methods: {
+    onCreateDevoir () {
+      if (!this.formIsValid) {
+        return
+      }
+      const devData = {
+        subject: this.subject.text,
+        title: this.title,
+        description: this.description,
+        date: this.date,
+        color: this.subject.colorForSubmit
+      }
+      this.$store.dispatch('createDevoir', devData)
+      this.$router.push('/output/devoirs')
     }
   }
 }

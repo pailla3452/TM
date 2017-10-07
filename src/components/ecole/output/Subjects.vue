@@ -10,6 +10,9 @@
               <v-list-tile-content>
                 <v-list-tile-title>{{subject.subject}}</v-list-tile-title>
               </v-list-tile-content>
+              <v-list-tile-action>
+                <v-btn fab small flat :class="[subject.colorFluid]"></v-btn>
+              </v-list-tile-action>
             </v-list-tile>
           </v-list>
           <v-card-text style="position: relative">

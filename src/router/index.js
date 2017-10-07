@@ -9,15 +9,18 @@ import Signup from '@/components/User/Signup'
 
 // Ecole components
 import Home from '@/components/ecole/Home'
-// Ecole input
-// import NouveauDevoir from '@/components/ecole/input/NouveauDevoir'
-// import NewSubject from '@/components/ecole/input/NewSubject'
 // Ecole output
 import Horaire from '@/components/ecole/output/Horaire'
 import Subjects from '@/components/ecole/output/Subjects'
 import Subject from '@/components/ecole/output/Subject'
 import Devoirs from '@/components/ecole/output/Devoirs'
 import Devoir from '@/components/ecole/output/Devoir'
+import Epreuves from '@/components/ecole/output/Epreuves'
+import Epreuve from '@/components/ecole/output/Epreuve'
+import Notes from '@/components/ecole/output/Notes'
+
+// AUTHGUARD
+import authGuard from './authGuard'
 
 Vue.use(Router)
 
@@ -27,54 +30,67 @@ export default new Router({
     {
       path: '/',
       name: 'Home',
-      component: Home
+      component: Home,
+      beforeEnter: authGuard
     },
-    // INPUT Ecole
-    // {
-    //   path: '/input/nouveaudevoir',
-    //   name: 'NouveauDevoir',
-    //   component: NouveauDevoir
-    //
-    // },
-    // {
-    //   path: '/input/newSubject',
-    //   name: 'NouveauDevoir',
-    //   component: NewSubject
-    //
-    // },
     // OUTPUT Ecole
     {
       path: '/output/Subjects',
       name: 'Subjects',
-      component: Subjects
+      component: Subjects,
+      beforeEnter: authGuard
     },
     {
       path: '/output/subjects/:id',
       name: 'Subject',
       props: true,
-      component: Subject
+      component: Subject,
+      beforeEnter: authGuard
     },
     {
       path: '/output/horaire',
       name: 'Horaire',
-      component: Horaire
+      component: Horaire,
+      beforeEnter: authGuard
+    },
+    {
+      path: '/output/epreuves',
+      name: 'Epreuves',
+      component: Epreuves,
+      beforeEnter: authGuard
+    },
+    {
+      path: '/output/epreuves/:id',
+      name: 'Epreuve',
+      props: true,
+      component: Epreuve,
+      beforeEnter: authGuard
     },
     {
       path: '/output/devoirs',
       name: 'Devoirs',
-      component: Devoirs
+      component: Devoirs,
+      beforeEnter: authGuard
     },
     {
       path: '/output/devoirs/:id',
       name: 'Devoir',
       props: true,
-      component: Devoir
+      component: Devoir,
+      beforeEnter: authGuard
+    },
+    {
+      path: '/output/notes',
+      name: 'Notes',
+      component: Notes,
+      beforeEnter: authGuard
     },
     // ROUTES USER
     {
       path: '/profile',
       name: 'Profile',
-      component: Profile
+      component: Profile,
+      beforeEnter: authGuard
     },
     {
       path: '/signup',
