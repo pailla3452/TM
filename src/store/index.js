@@ -5,6 +5,11 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
+    toolbarInfo: {
+      icon: 'school',
+      text: 'Collège',
+      color: 'primary'
+    },
     user: null,
     error: null,
     // TODO: Si on a le temps faire LOADING
@@ -64,18 +69,27 @@ export const store = new Vuex.Store({
       {
         id: 'aisjfoiajfoiasdj',
         subject: 'Math',
+        horaire: {
+
+        },
         color: 'red--text text--darken-4',
         colorFluid: 'red darken-4'
       },
       {
         id: 'aisjfoiajfasfasfagfdoiasdj',
         subject: 'Français',
+        horaire: {
+
+        },
         color: 'indigo--text text--darken-1',
         colorFluid: 'indigo darken-1'
       },
       {
         id: 'hdhdhfhdf',
         subject: 'Informatique',
+        horaire: {
+
+        },
         color: 'blue-grey--text text--darken-2',
         colorFluid: 'blue-grey darken-2'
       }
@@ -84,6 +98,12 @@ export const store = new Vuex.Store({
   mutations: {
     createDevoir (state, payload) {
       state.devoirs.push(payload)
+    },
+    createEpreuve (state, payload) {
+      state.epreuves.push(payload)
+    },
+    createReminder (state, payload) {
+      state.reminders.push(payload)
     },
     createSubject (state, payload) {
       state.subjects.push(payload)
@@ -94,35 +114,252 @@ export const store = new Vuex.Store({
     setError (state, payload) {
       state.error = payload
     },
+    setLoadedDevoirs (state, payload) {
+      state.devoirs = payload
+    },
+    setLoadedEpreuves (state, payload) {
+      state.epreuves = payload
+    },
+    setLoadedReminders (state, payload) {
+      state.reminders = payload
+    },
+    setLoadedSubjects (state, payload) {
+      state.subjects = payload
+    },
     clearError (state) {
       state.error = null
+    },
+    changeToolbarInfo (state, payload) {
+      state.toolbarInfo = payload
     }
   },
   actions: {
-    // TODO ESCRIBIR FUNCION PARA LOAD DEVOIR
-    createDevoir ({commit}, payload) {
+    loadData ({commit}, payload) {
+      // FIREBASE DEVOIRS
+      firebase.database().ref('devoirs').once('value')
+      .then((data) => {
+        console.log(data.val())
+        const devoirs = []
+        const ob = data.val()
+        for (let key in ob) {
+          devoirs.push({
+            id: key,
+            subject: ob[key].subject,
+            title: ob[key].title,
+            description: ob[key].description,
+            date: ob[key].date,
+            color: ob[key].color,
+            colorFluid: ob[key].colorFluid,
+            // PARTICULARITES DEVOIRS
+            progres: ob[key].progres,
+            // POUR L'UTILISATEUR
+            creatorId: ob[key].id,
+            subjectId: ob[key].subjectId
+          })
+        }
+        commit('setLoadedDevoirs', devoirs)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+      // FIREBASE EPREUVES
+      firebase.database().ref('epreuves').once('value')
+      .then((data) => {
+        console.log(data.val())
+        const epreuves = []
+        const ob = data.val()
+        for (let key in ob) {
+          epreuves.push({
+            id: key,
+            subject: ob[key].subject,
+            title: ob[key].title,
+            description: ob[key].description,
+            date: ob[key].date,
+            color: ob[key].color,
+            colorFluid: ob[key].colorFluid,
+            // PARTICULARITES EPREUVES
+            coef: ob[key].coef,
+            note: ob[key].note,
+            // POUR L'UTILISATEUR
+            creatorId: ob[key].id,
+            subjectId: ob[key].subjectId
+          })
+        }
+        commit('setLoadedEpreuves', epreuves)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+      // FIREBASE REMINDERS
+      firebase.database().ref('reminders').once('value')
+      .then((data) => {
+        console.log(data.val())
+        const reminders = []
+        const ob = data.val()
+        for (let key in ob) {
+          reminders.push({
+            id: key,
+            subject: ob[key].subject,
+            title: ob[key].title,
+            description: ob[key].description,
+            date: ob[key].date,
+            color: ob[key].color,
+            colorFluid: ob[key].colorFluid,
+            // PARTICULARITES REMINDERS
+            heure: ob[key].heure,
+            // POUR L'UTILISATEUR
+            creatorId: ob[key].id,
+            subjectId: ob[key].subjectId
+          })
+        }
+        commit('setLoadedReminders', reminders)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+      // FIREBASE SUBJECTS
+      firebase.database().ref('subjects').once('value')
+      .then((data) => {
+        console.log(data.val())
+        const subjects = []
+        const ob = data.val()
+        for (let key in ob) {
+          subjects.push({
+            id: key,
+            creatorId: ob[key].id,
+            // CONFIG
+            subject: ob[key].subject,
+            color: ob[key].color,
+            colorFluid: ob[key].colorFluid,
+            // INFORMATIONS
+            cours: ob[key].cours,
+            notes: ob[key].notes
+          })
+        }
+        commit('setLoadedSubjects', subjects)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+    },
+    // CREER DEVOIR
+    createDevoir ({commit, getters}, payload) {
       const devoir = {
         subject: payload.subject,
         title: payload.title,
         description: payload.description,
         date: payload.date,
-        progres: 50,
-        // TODO: ir a sacar color de subjects
         color: payload.color,
-        // TODO: ESTO LO ASIGNARA DESPUES FIREBASE
-        id: 'IUASFIASHFIAUSHFIA'
+        colorFluid: payload.colorFluid,
+        // PARTICULARITES DEVOIR
+        progres: 45,
+        // POUR L'UTILISATEUR
+        creatorId: getters.user.id,
+        subjectId: payload.subjectId
       }
-      commit('createDevoir', devoir)
+      // FIREBASE
+      // let key
+      firebase.database().ref('devoirs').push(devoir)
+      .then((data) => {
+        const key = data.key
+        console.log(data)
+        // STORE
+        commit('createDevoir', {
+          ...devoir,
+          id: key
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
     },
-    createSubject ({commit}, payload) {
+    // CREER EPREUVE
+    createEpreuve ({commit, getters}, payload) {
+      const epreuve = {
+        subject: payload.subject,
+        title: payload.title,
+        description: payload.description,
+        date: payload.date,
+        color: payload.color,
+        colorFluid: payload.colorFluid,
+        // PARTICULARITES EPREUVES
+        coef: payload.coef,
+        note: 0,
+        // POUR L'UTILISATEUR
+        creatorId: getters.user.id,
+        subjectId: payload.subjectId
+      }
+      // FIREBASE
+      // let key
+      firebase.database().ref('epreuves').push(epreuve)
+      .then((data) => {
+        const key = data.key
+        console.log(data)
+        // STORE
+        commit('createEpreuve', {
+          ...epreuve,
+          id: key
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+    },
+    // CREER REMINDER
+    createReminder ({commit, getters}, payload) {
+      const reminder = {
+        subject: payload.subject,
+        title: payload.title,
+        description: payload.description,
+        date: payload.date,
+        color: payload.color,
+        colorFluid: payload.colorFluid,
+        // PARTICULARITES REMINDERS
+        heure: payload.heure,
+        // POUR L'UTILISATEUR
+        creatorId: getters.user.id,
+        subjectId: payload.subjectId
+      }
+      // FIREBASE
+      // let key
+      firebase.database().ref('reminders').push(reminder)
+      .then((data) => {
+        const key = data.key
+        console.log(data)
+        // STORE
+        commit('createReminder', {
+          ...reminder,
+          id: key
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+    },
+    createSubject ({commit, getters}, payload) {
       const subject = {
         subject: payload.subject,
         color: payload.color,
         colorFluid: payload.colorFluid,
-        // TODO: estp se asignara con firebase
-        id: '092i3r0wejfoisj'
+        creatorId: getters.user.id,
+        // INFORMATIONS, TODO
+        cours: [null],
+        notes: [null]
       }
-      commit('createSubject', subject)
+      // FIREBASE
+      firebase.database().ref('subjects').push(subject)
+      .then((data) => {
+        const key = data.key
+        console.log(data)
+        // STORE
+        commit('createSubject', {
+          ...subject,
+          id: key
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
     },
     signUserUp ({commit}, payload) {
       commit('clearError')
@@ -159,9 +396,13 @@ export const store = new Vuex.Store({
     logOut ({commit}) {
       firebase.auth().signOut()
       commit('setUser', null)
+    },
+    changeToolbarInfo ({commit}, payload) {
+      commit('changeToolbarInfo', payload)
     }
   },
   getters: {
+    // DEVOIRS
     loadedDevoir (state) {
       return (devoirId) => {
         return state.devoirs.find((devoir) => {
@@ -169,6 +410,10 @@ export const store = new Vuex.Store({
         })
       }
     },
+    loadedDevoirs (state) {
+      return state.devoirs
+    },
+    // SUBJECTS
     loadedSubject (state) {
       return (subjectId) => {
         return state.subjects.find((subject) => {
@@ -176,11 +421,40 @@ export const store = new Vuex.Store({
         })
       }
     },
+    loadedSubjects (state) {
+      return state.subjects
+    },
+    // EPREUVES
+    loadedEpreuve (state) {
+      return (epreuveId) => {
+        return state.epreuves.find((epreuve) => {
+          return epreuve.id === epreuveId
+        })
+      }
+    },
+    loadedEpreuves (state) {
+      return state.epreuves
+    },
+    // REMINDERS
+    loadedReminder (state) {
+      return (reminderId) => {
+        return state.reminders.find((reminder) => {
+          return reminder.id === reminderId
+        })
+      }
+    },
+    loadedReminders (state) {
+      return state.reminders
+    },
+    // AUTRES
     error (state) {
       return state.error
     },
     user (state) {
       return state.user
+    },
+    toolbarInfo (state) {
+      return state.toolbarInfo
     }
   }
 })

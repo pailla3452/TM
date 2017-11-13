@@ -1,20 +1,22 @@
 <template lang="html">
   <v-container>
-    <v-progress-circular
-    :size="150"
-    :width="3"
-    indeterminate
-    class="red--text">
-      <v-icon x-large>build</v-icon>
-    </v-progress-circular>
-    <h2>Este sitio esta en construcción!</h2>
-    <hr>
-    <p><v-icon>lightbulb_outline</v-icon> :)!</p>
+
   </v-container>
 </template>
 
 <script>
 export default {
+  created () {
+    this.$store.dispatch('changeToolbarInfo', {icon: 'accessibility', text: 'watapuuun!', color: 'deep-purple lighten-3'})
+  },
+  beforeDestroy () {
+    this.$store.dispatch('changeToolbarInfo', {icon: 'school', text: 'Collège!', color: 'primary'})
+  },
+  computed: {
+    subjects () {
+      return this.$store.getters.loadedSubjects
+    }
+  }
 }
 </script>
 

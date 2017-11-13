@@ -13,9 +13,11 @@
           </v-list-tile-action>
           <v-list-tile-content>{{item.title}}</v-list-tile-content>
         </v-list-tile>
+        <v-divider></v-divider>
         <v-list-tile
         v-if="userIsAuthenticated"
-        @click="onSignOut">
+        @click="onSignOut"
+        class="mt-2">
           <v-list-tile-action>
             <v-icon>exit_to_app</v-icon>
           </v-list-tile-action>
@@ -25,7 +27,7 @@
     </v-navigation-drawer>
 
     <!-- TOOLBAR principal -->
-    <v-toolbar dark class="primary">
+    <v-toolbar dark :class="toolbarInfo.color">
       <!-- Open sidebar -->
       <v-toolbar-side-icon
         @click.stop="sideNav = !sideNav"
@@ -33,8 +35,8 @@
       <!-- Toolbar :B -->
       <v-toolbar-title>
         <router-link flat to='/' tag='span' style="cursor: pointer">
-           <v-icon left dark class="mr-1 mb-1">school</v-icon>
-           Collège
+           <v-icon left dark class="mr-1 mb-1">{{toolbarInfo.icon}}</v-icon>
+           {{toolbarInfo.text}}
          </router-link>
       </v-toolbar-title>
       <v-spacer></v-spacer >
@@ -80,6 +82,7 @@
             // {icon: 'home', title: 'Home', link: '/'},
             {icon: 'assignment', title: 'Devoirs', link: '/output/devoirs'},
             {icon: 'report', title: 'Epreuves', link: '/output/epreuves'},
+            {icon: 'alarm', title: 'Rappels', link: '/output/reminders'},
             {icon: 'date_range', title: 'Horaire', link: '/output/horaire'},
             {icon: 'trending_up', title: 'Notes', link: '/output/notes'},
             {icon: 'view_week', title: 'Subjects', link: '/output/subjects'},
@@ -91,10 +94,14 @@
       },
       userIsAuthenticated () {
         return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+      },
+      toolbarInfo () {
+        return this.$store.getters.toolbarInfo
       }
     },
     methods: {
       onSignOut () {
+        this.$router.push('/signin')
         this.$store.dispatch('logOut')
       }
     }

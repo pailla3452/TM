@@ -17,6 +17,7 @@ import Devoirs from '@/components/ecole/output/Devoirs'
 import Devoir from '@/components/ecole/output/Devoir'
 import Epreuves from '@/components/ecole/output/Epreuves'
 import Epreuve from '@/components/ecole/output/Epreuve'
+import Reminders from '@/components/ecole/output/Reminders'
 import Notes from '@/components/ecole/output/Notes'
 
 // AUTHGUARD
@@ -34,6 +35,7 @@ export default new Router({
       beforeEnter: authGuard
     },
     // OUTPUT Ecole
+    // TODO SIMPLIFIER ROUTER
     {
       path: '/output/Subjects',
       name: 'Subjects',
@@ -51,6 +53,12 @@ export default new Router({
       path: '/output/horaire',
       name: 'Horaire',
       component: Horaire,
+      beforeEnter: authGuard
+    },
+    {
+      path: '/output/reminders',
+      name: 'Reminders',
+      component: Reminders,
       beforeEnter: authGuard
     },
     {

@@ -9,6 +9,7 @@
       <v-flex xs12 sm6 offset-sm3>
         <v-card-text>
           <v-container>
+            <h3>Sign Up</h3>
             <form @submit.prevent="onSignup">
               <v-layout row>
                 <v-flex xs12>
@@ -100,5 +101,12 @@ export default {
 
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
+  h3{
+    text-align: center;
+  }
+  /*#imagen{
+    background-image: url(../../assets/signIn.jpg);
+    background-size: 100% 100%;
+  }*/
 </style>

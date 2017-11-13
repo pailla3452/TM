@@ -9,13 +9,18 @@
       <v-flex xs12 sm6 offset-sm3>
         <v-card-text>
           <v-container>
-            <h3>Sign In!</h3>
+            <h3>Se connecter</h3>
+            <v-layout>
+              <v-flex xs12 class="text-xs-center mb-3 mt-2">
+                <v-icon large>fingerprint</v-icon>
+              </v-flex>
+            </v-layout>
             <form @submit.prevent="onSignIn">
               <v-layout row>
                 <v-flex xs12>
                   <v-text-field
                   name="email"
-                  label="Mail"
+                  label="e-mail"
                   id="email"
                   v-model="email"
                   type="email"
@@ -28,7 +33,7 @@
                 <v-flex xs12>
                   <v-text-field
                   name="password"
-                  label="Password"
+                  label="Mot de passe"
                   id="password"
                   v-model="password"
                   type="password"
@@ -38,8 +43,8 @@
                 </v-flex>
               </v-layout>
               <v-layout row>
-                <v-flex xs12>
-                  <v-btn type="submit">Sign in</v-btn>
+                <v-flex xs12 class="text-xs-center mt-3">
+                  <v-btn type="submit">Se connecter</v-btn>
                 </v-flex>
               </v-layout>
             </form>
@@ -68,7 +73,6 @@ export default {
   },
   methods: {
     onSignIn () {
-      // Vuex TODO + Check firebase TODO
       this.$store.dispatch('signUserIn', {email: this.email, password: this.password})
     },
     onDismissed () {

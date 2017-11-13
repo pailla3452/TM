@@ -41,8 +41,12 @@
 export default {
   data () {
     return {
-      dialog: false,
-      subjects: this.$store.state.subjects
+      dialog: false
+    }
+  },
+  computed: {
+    subjects () {
+      return this.$store.getters.loadedSubjects
     }
   }
 }

@@ -6,6 +6,9 @@ import router from './router'
 import * as firebase from 'firebase'
 // OUTPUT!!
 import DevoirCmp from './components/ecole/output/Devoir'
+import EpreuveCmp from './components/ecole/output/Epreuve'
+import ReminderCmp from './components/ecole/output/Reminder'
+import SubjectCmp from './components/ecole/output/Subject'
 // INPUT!!
 import NouveauDevoir from './components/ecole/input/NouveauDevoir'
 import NewSubject from './components/ecole/input/NewSubject'
@@ -17,7 +20,13 @@ Vue.use(Vuetify)
 Vue.config.productionTip = false
 
 // Components!
+// OUTPUT
 Vue.component('app-devoir', DevoirCmp)
+Vue.component('app-epreuve', EpreuveCmp)
+Vue.component('app-reminder', ReminderCmp)
+// ***
+Vue.component('app-subject', SubjectCmp)
+// INPUT
 Vue.component('app-nouveauDev', NouveauDevoir)
 Vue.component('app-newSubject', NewSubject)
 Vue.component('app-alert', Alert)
@@ -34,12 +43,13 @@ new Vue({
       authDomain: 'travailmatu-5f93e.firebaseapp.com',
       databaseURL: 'https://travailmatu-5f93e.firebaseio.com',
       projectId: 'travailmatu-5f93e',
-      storageBucket: ''
+      storageBucket: 'travailmatu-5f93e.appspot.com'
     })
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.$store.dispatch('autoSignIn', user)
       }
     })
+    this.$store.dispatch('loadData')
   }
 })
