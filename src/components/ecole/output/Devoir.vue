@@ -50,11 +50,11 @@ export default {
     },
     onSave () {
       this.$store.dispatch('updateDevoir', {id: this.devoir.id, progres: this.slider.val})
-      this.$router.push('/')
+      this.$router.push('/output/devoirs')
     },
     onDelete () {
       this.$store.dispatch('deleteData', {id: this.devoir.id, type: 'devoirs'})
-      this.$router.push('/')
+      this.$router.push('/output/devoirs')
     }
   },
   created () {

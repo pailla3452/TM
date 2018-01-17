@@ -142,7 +142,7 @@ export const store = new Vuex.Store({
       const newData = state[payload.type].filter((item) => {
         return item.id !== payload.id
       })
-      state.devoirs = newData
+      state[payload.type] = newData
     }
   },
   actions: {
@@ -264,7 +264,7 @@ export const store = new Vuex.Store({
         color: payload.color,
         colorFluid: payload.colorFluid,
         // PARTICULARITES DEVOIR
-        progres: 45,
+        progres: 0,
         // POUR L'UTILISATEUR
         creatorId: getters.user.id,
         subjectId: payload.subjectId

@@ -4,15 +4,19 @@
     <!-- SIDEBAR-->
     <v-navigation-drawer temporary v-model="sideNav">
       <v-list>
-        <v-list-tile
+        <v-layout
         v-for="item in menuItems"
-        :key="item.title"
-        :to='item.link'>
-          <v-list-tile-action>
-            <v-icon>{{item.icon}}</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>{{item.title}}</v-list-tile-content>
-        </v-list-tile>
+        :key="item.title">
+          <v-flex>
+            <v-list-tile :to='item.link'>
+              <v-list-tile-action>
+                <v-icon>{{item.icon}}</v-icon>
+              </v-list-tile-action>
+              <v-list-tile-content>{{item.title}}</v-list-tile-content>
+            </v-list-tile>
+            <v-divider v-if="item.divide" class="mt-2 mb-2"></v-divider>
+          </v-flex>
+        </v-layout>
         <v-divider></v-divider>
         <v-list-tile
         v-if="userIsAuthenticated"
@@ -80,14 +84,14 @@
         if (this.userIsAuthenticated) {
           menuItems = [
             // {icon: 'home', title: 'Home', link: '/'},
-            {icon: 'assignment', title: 'Devoirs', link: '/output/devoirs'},
-            {icon: 'report', title: 'Epreuves', link: '/output/epreuves'},
-            {icon: 'alarm', title: 'Rappels', link: '/output/reminders'},
-            {icon: 'date_range', title: 'Horaire', link: '/output/horaire'},
-            {icon: 'trending_up', title: 'Notes', link: '/output/notes'},
-            {icon: 'view_week', title: 'Subjects', link: '/output/subjects'},
-            {icon: 'build', title: 'Config', link: '/profile'},
-            {icon: 'person', title: 'Profile', link: '/profile'}
+            {icon: 'assignment', title: 'Devoirs', link: '/output/devoirs', divide: false},
+            {icon: 'report', title: 'Epreuves', link: '/output/epreuves', divide: false},
+            {icon: 'alarm', title: 'Rappels', link: '/output/reminders', divide: true},
+            {icon: 'date_range', title: 'Horaire', link: '/output/horaire', divide: false},
+            {icon: 'trending_up', title: 'Notes', link: '/output/notes', divide: false},
+            {icon: 'view_week', title: 'Branches', link: '/output/subjects', divide: true},
+            {icon: 'build', title: 'Paramètres', link: '/profile', divide: false},
+            {icon: 'person', title: 'Utilisateur', link: '/profile', divide: false}
           ]
         }
         return menuItems

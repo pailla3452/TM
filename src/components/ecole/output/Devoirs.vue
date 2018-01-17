@@ -17,12 +17,16 @@
                   <v-progress-circular
                   :value="devoir.progres"
                   v-bind:rotate="-90"
-                  v-bind:class="[devoir.color]">
-                </v-progress-circular>
+                  v-bind:class="[devoir.color]"
+                  v-if="devoir.progres !== 100">
+                  </v-progress-circular>
+                  <v-icon v-else :class="[devoir.color]">done</v-icon>
                 </v-list-tile-avatar>
                   <v-list-tile-content>
-                    <v-list-tile-title>{{devoir.title}}</v-list-tile-title>
-                    <v-list-tile-sub-title>{{devoir.description}}</v-list-tile-sub-title>
+                    <v-list-tile-title v-if="devoir.progres === 100"><strike>{{devoir.title}}</strike></v-list-tile-title>
+                    <v-list-tile-title v-else>{{devoir.title}}</v-list-tile-title>
+                    <v-list-tile-sub-title v-if="devoir.progres === 100"><strike>{{devoir.description}}</strike></v-list-tile-sub-title>
+                    <v-list-tile-sub-title v-else>{{devoir.description}}</v-list-tile-sub-title>
                   </v-list-tile-content>
                 <v-list-tile-action>
                   <v-list-tile-action-text>

@@ -1,16 +1,13 @@
 <template lang="html">
     <v-layout row wrap>
       <v-flex xs12 sm6 offset-sm3>
-        <v-card>
+        <v-card class="pt-3">
           <v-list two-line subheader>
             <!-- TODO epreuves CETTE SEMAINE -->
-            <v-subheader inset>Cette semaine</v-subheader>
             <!-- epreuveLIST ELEMENT -->
-            <v-list-tile avatar
-            v-for="epreuve in epreuves"
-            :key="epreuve.id"
-            :to="'/output/epreuves/' + epreuve.id"
-            >
+            <template
+            v-for="(epreuve, i) in epreuves">
+            <v-list-tile avatar :to="'/output/epreuves/' + epreuve.id">
               <v-list-tile-content>
                 <v-list-tile-title>{{epreuve.title}}</v-list-tile-title>
                 <v-list-tile-sub-title>{{epreuve.description}}</v-list-tile-sub-title>
@@ -22,6 +19,8 @@
                 </v-list-tile-action-text>
               </v-list-tile-action>
             </v-list-tile>
+            <v-divider v-if="i + 1 < epreuves.length"></v-divider>
+            </template>
           </v-list>
           <v-card-text style="position: relative">
             <v-dialog v-model="dialog" fullscreen transition="dialog-bottom-transition" :overlay="false">
@@ -56,12 +55,6 @@ export default {
     epreuves () {
       return this.$store.getters.loadedEpreuves
     }
-  },
-  created () {
-    this.$store.dispatch('changeToolbarInfo', {icon: 'report', text: 'Epreuves', color: 'primary'})
-  },
-  beforeDestroy () {
-    this.$store.dispatch('changeToolbarInfo', {icon: 'school', text: 'Upper', color: 'primary'})
   }
 }
 </script>

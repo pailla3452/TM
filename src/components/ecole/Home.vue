@@ -11,9 +11,9 @@
         <!-- DEVOIRS -->
         <v-progress-circular
           v-bind:size="150"
-          v-bind:width="15"
+          v-bind:width="10"
           v-bind:rotate="-90"
-          v-bind:value="devoirs.length"
+          v-bind:value="100"
           class="cyan--text text--darken-3"
         >
           <h3 class="mt-3">{{ devoirs.length }}</h3>
@@ -25,9 +25,9 @@
           <!-- EPREUVES -->
           <v-progress-circular
             v-bind:size="75"
-            v-bind:width="10"
+            v-bind:width="5"
             v-bind:rotate="-90"
-            v-bind:value="epreuves.length"
+            v-bind:value="100"
             class="deep-orange--text text--darken-3"
           >
             <h4 class="mt-3">{{ epreuves.length }}</h4>
@@ -36,9 +36,9 @@
           <!-- REMINDERS -->
           <v-progress-circular
           v-bind:size="75"
-          v-bind:width="10"
+          v-bind:width="5"
           v-bind:rotate="-90"
-          v-bind:value="reminders.length"
+          v-bind:value="100"
           class="blue--text text--darken-3"
           >
             <h4 class="mt-3">{{ reminders.length }}</h4>
