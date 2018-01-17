@@ -7,7 +7,7 @@ export const store = new Vuex.Store({
   state: {
     toolbarInfo: {
       icon: 'school',
-      text: 'Collège',
+      text: 'Upper',
       color: 'primary'
     },
     user: null,
@@ -70,7 +70,7 @@ export const store = new Vuex.Store({
         id: 'aisjfoiajfoiasdj',
         subject: 'Math',
         horaire: {
-
+          'L': ['h1', 'h2']
         },
         color: 'red--text text--darken-4',
         colorFluid: 'red darken-4'
@@ -131,6 +131,18 @@ export const store = new Vuex.Store({
     },
     changeToolbarInfo (state, payload) {
       state.toolbarInfo = payload
+    },
+    updateDevoir (state, payload) {
+      const devoir = state.devoirs.find((devoir) => {
+        return devoir.id === payload.id
+      })
+      devoir.progres = payload.progres
+    },
+    deleteData (state, payload) {
+      const newData = state[payload.type].filter((item) => {
+        return item.id !== payload.id
+      })
+      state.devoirs = newData
     }
   },
   actions: {
@@ -399,6 +411,27 @@ export const store = new Vuex.Store({
     },
     changeToolbarInfo ({commit}, payload) {
       commit('changeToolbarInfo', payload)
+    },
+    updateDevoir ({commit}, payload) {
+      const updateObj = {}
+      updateObj.progres = payload.progres
+      console.log('DESDE STORE: ' + updateObj)
+      firebase.database().ref('devoirs').child(payload.id).update(updateObj)
+      .then(() => {
+        commit('updateDevoir', payload)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    },
+    deleteData ({commit}, payload) {
+      firebase.database().ref(payload.type).child(payload.id).remove()
+      .then(() => {
+        commit('deleteData', payload)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
     }
   },
   getters: {

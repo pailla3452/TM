@@ -5,31 +5,23 @@
           <v-list two-line subheader>
             <!-- TODO epreuves CETTE SEMAINE -->
             <v-subheader inset>Cette semaine</v-subheader>
-            <!-- TODO ONCLICK IR AL epreuve-->
-            <v-dialog v-model="dialogEpreuve" lazy absolute v-for="epreuve in epreuves" :keys="epreuve.id">
-              <!-- epreuveLIST ELEMENT -->
-              <v-list-tile avatar slot="activator">
-                <v-list-tile-avatar>
-                  <v-progress-circular
-                  :value="epreuve.progres"
-                  v-bind:rotate="-90"
-                  v-bind:class="[epreuve.color]">
-                  </v-progress-circular>
-                </v-list-tile-avatar>
-                <v-list-tile-content>
-                  <v-list-tile-title>{{epreuve.title}}</v-list-tile-title>
-                  <v-list-tile-sub-title>{{epreuve.description}}</v-list-tile-sub-title>
-                </v-list-tile-content>
-                <v-list-tile-action>
-                  <v-list-tile-action-text>
-                    {{epreuve.date}}
-                    {{epreuve.subject}}
-                  </v-list-tile-action-text>
-                </v-list-tile-action>
-              </v-list-tile>
-              <!-- epreuveCOMPONENT -->
-              <app-epreuve @closeEmited="dialogEpreuve = false" :idEp="epreuve.id"></app-epreuve>
-            </v-dialog>
+            <!-- epreuveLIST ELEMENT -->
+            <v-list-tile avatar
+            v-for="epreuve in epreuves"
+            :key="epreuve.id"
+            :to="'/output/epreuves/' + epreuve.id"
+            >
+              <v-list-tile-content>
+                <v-list-tile-title>{{epreuve.title}}</v-list-tile-title>
+                <v-list-tile-sub-title>{{epreuve.description}}</v-list-tile-sub-title>
+              </v-list-tile-content>
+              <v-list-tile-action>
+                <v-list-tile-action-text>
+                  {{epreuve.date}}
+                  {{epreuve.subject}}
+                </v-list-tile-action-text>
+              </v-list-tile-action>
+            </v-list-tile>
           </v-list>
           <v-card-text style="position: relative">
             <v-dialog v-model="dialog" fullscreen transition="dialog-bottom-transition" :overlay="false">
@@ -64,6 +56,12 @@ export default {
     epreuves () {
       return this.$store.getters.loadedEpreuves
     }
+  },
+  created () {
+    this.$store.dispatch('changeToolbarInfo', {icon: 'report', text: 'Epreuves', color: 'primary'})
+  },
+  beforeDestroy () {
+    this.$store.dispatch('changeToolbarInfo', {icon: 'school', text: 'Upper', color: 'primary'})
   }
 }
 </script>

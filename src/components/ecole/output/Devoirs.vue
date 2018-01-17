@@ -1,9 +1,6 @@
 <template lang="html">
   <v-layout row>
     <v-flex xs12 sm6 offset-sm3>
-      <v-dialog v-model="dialogDevoir">
-        <app-devoir @closeEmitted="dialogDevoir = false" :idDev="idDev"></app-devoir>
-      </v-dialog>
       <v-card>
         <v-list two-line>
           <template v-for="(devoir, i) in devoirs">
@@ -14,7 +11,7 @@
               avatar
               ripple
               :key="devoir.id"
-              @click.stop="onClickDevoir(i)"
+              :to="'/output/devoirs/' + devoir.id"
               >
                 <v-list-tile-avatar>
                   <v-progress-circular
@@ -63,20 +60,12 @@
 export default {
   data () {
     return {
-      dialog: false,
-      dialogDevoir: false,
-      idDev: ''
+      dialog: false
     }
   },
   computed: {
     devoirs () {
       return this.$store.getters.loadedDevoirs
-    }
-  },
-  methods: {
-    onClickDevoir (i) {
-      this.dialogDevoir = true
-      this.idDev = this.devoirs[i]
     }
   }
 }
