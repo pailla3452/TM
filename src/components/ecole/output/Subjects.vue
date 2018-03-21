@@ -4,9 +4,7 @@
       <v-flex xs12 sm6 offset-sm3>
         <v-card>
           <v-list two-line subheader>
-            <!-- TODO ONCLICK IR AL SUBJECT -->
-            <v-list-tile avatar v-for="subject in subjects" :keys="subject.id" :to="'/output/subjects/' + subject.id">
-              <!-- TODO PONER PROGRES!! -->
+            <v-list-tile avatar v-for="subject in subjects" :keys="subject.id">
               <v-list-tile-content>
                 <v-list-tile-title>{{subject.subject}}</v-list-tile-title>
               </v-list-tile-content>

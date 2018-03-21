@@ -50,11 +50,11 @@
     <v-divider class="mt-2 mb-4"></v-divider>
     <!-- BOTONES 1.Horaire 2.Nouveau devoir-->
     <v-layout row wrap>
-        <v-flex xs12 sm6 class="text-xs-center text-sm-right">
+        <!-- <v-flex xs12 sm6 class="text-xs-center text-sm-right">
           <v-btn flat large router to='/output/horaire' class="blue darken-2" dark>
             <v-icon left>dashboard</v-icon>
             Horaire</v-btn>
-        </v-flex>
+        </v-flex> -->
         <v-flex xs12 sm6 class="text-xs-center text-sm-left">
           <v-dialog v-model="dialog" fullscreen transition="dialog-bottom-transition" :overlay="false">
             <v-btn large outline fab slot="activator" primary>

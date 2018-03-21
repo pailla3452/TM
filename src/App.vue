@@ -87,11 +87,11 @@
             {icon: 'assignment', title: 'Devoirs', link: '/output/devoirs', divide: false},
             {icon: 'report', title: 'Epreuves', link: '/output/epreuves', divide: false},
             {icon: 'alarm', title: 'Rappels', link: '/output/reminders', divide: true},
-            {icon: 'date_range', title: 'Horaire', link: '/output/horaire', divide: false},
-            {icon: 'trending_up', title: 'Notes', link: '/output/notes', divide: false},
-            {icon: 'view_week', title: 'Branches', link: '/output/subjects', divide: true},
-            {icon: 'build', title: 'Paramètres', link: '/profile', divide: false},
-            {icon: 'person', title: 'Utilisateur', link: '/profile', divide: false}
+            // {icon: 'date_range', title: 'Horaire', link: '/output/horaire', divide: false},
+            // {icon: 'trending_up', title: 'Notes', link: '/output/notes', divide: false},
+            {icon: 'view_week', title: 'Branches', link: '/output/subjects', divide: false}
+            // {icon: 'build', title: 'Paramètres', link: '/profile', divide: false},
+            // {icon: 'person', title: 'Utilisateur', link: '/profile', divide: false}
           ]
         }
         return menuItems
